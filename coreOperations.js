@@ -68,3 +68,60 @@ addSongStrategically(strategicSet, "Thunderstruck", "beginning");
 addSongStrategically(strategicSet, "Free Bird", "end");
 addSongStrategically(strategicSet, "Wonderwall", 2);
 console.log("Strategic setlist:", strategicSet);
+
+
+// ==============================
+// Exercise 4: Help Alex Remove Songs Strategically
+// ==============================
+// Task: Create a function that removes songs using the most efficient method
+
+function removeSongStrategically(setlist, position) {
+    let removedSong;
+  // If position is "end", use pop (O(1))
+  if (position === "end") {
+    removedSong = setlist.pop()
+  }
+  // If position is "beginning", use shift (O(n))
+ if (position === "beginning") {
+    removedSong = setlist.shift()
+ }
+  // If position is a number, use splice (O(n))
+  if (!isNaN(position)) {
+    removedSong = setlist.splice(position, 1) [0]
+  }
+  
+  // Return the removed song
+  return removedSong
+}
+
+let removalSet = ["Thunderstruck", "Hotel California", "Wonderwall", "Free Bird"];
+console.log("Removed from end:", removeSongStrategically(removalSet, "end"));
+console.log("Removed from beginning:", removeSongStrategically(removalSet, "beginning"));
+console.log("Removed from position 1:", removeSongStrategically(removalSet, 1));
+console.log("Final setlist:", removalSet);
+
+// ==============================
+// Exercise 5: Help Alex Find Songs for Requests
+// ==============================
+// Task: Create a function that finds songs matching specific criteria
+
+function findSongsForRequest(repertoire, criteria) {
+  // repertoire is an array of song objects with properties like title, genre, mood
+  // criteria is an object like { genre: "rock", mood: "energetic" }
+  // Return all songs that match ALL the criteria
+  return repertoire.filter(song => {
+    return Object.keys(criteria).every(key =>
+    song[key] && song[key].toLowerCase() === criteria[key].toLowerCase()
+  )
+  })
+}
+
+const alexsRepertoire = [
+  { title: "Thunderstruck", genre: "rock", mood: "energetic" },
+  { title: "Hotel California", genre: "rock", mood: "mysterious" },
+  { title: "Wonderwall", genre: "alternative", mood: "nostalgic" },
+  { title: "Tears in Heaven", genre: "ballad", mood: "emotional" }
+];
+
+console.log("Rock songs:", findSongsForRequest(alexsRepertoire, { genre: "rock" }));
+console.log("Energetic rock:", findSongsForRequest(alexsRepertoire, { genre: "rock", mood: "energetic" }));
